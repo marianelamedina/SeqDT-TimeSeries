@@ -47,10 +47,8 @@ def RLR(X_translated: np.ndarray) -> list:
             X_RLR.append([])
             continue
         
-        # Inizia con il primo elemento
         new_sequence = [sequence[0]]
         
-        # Aggiungi solo se diverso dal precedente
         for i in range(1, len(sequence)):
             if sequence[i] != sequence[i-1]:
                 new_sequence.append(sequence[i])
@@ -105,11 +103,10 @@ def TSAnalysis(X_train: np.ndarray, y_train: np.ndarray,
     mean, std, boundaries = create_boundaries(X_train, bins)
     
     if visualize_plots == True:
-        # Plot Gaussian distribution with boundaries
         fig_gaussian = plot_gaussian_with_boundaries(mean, std, boundaries)
         fig_gaussian.show()
     
-    # Translate time series to discrete bins
+    
     X_train_translated = translate_timeseries(X_train, boundaries)
     X_test_translated = translate_timeseries(X_test, boundaries)
     
@@ -122,6 +119,7 @@ def TSAnalysis(X_train: np.ndarray, y_train: np.ndarray,
         
         train_sequences = prepare_data_for_seqdt(X_train_translated, y_train)
         test_sequences = prepare_data_for_seqdt(X_test_translated, y_test)
+    
     
     # RLR(Run Length Reduction) METHOD
     elif method == 'RLR':
@@ -161,6 +159,7 @@ def TSAnalysis(X_train: np.ndarray, y_train: np.ndarray,
     std_seq_len_test = np.std(test_seq_lengths)
     min_seq_len = min(all_seq_lengths)
     max_seq_len = max(all_seq_lengths)
+    
     
     summary = {
         'Dataset': dataset_name,
