@@ -64,7 +64,8 @@ def RLR(X_translated: np.ndarray) -> list:
 def TSAnalysis(X_train: np.ndarray, y_train: np.ndarray,
                X_test: np.ndarray, y_test: np.ndarray, bins: int, 
                method: str = 'Classic', patients_to_viz: list = None, 
-               SeqDT_parameters: dict = None, dataset_name: str = 'Unknown', visualize_plots: bool = True) -> dict:
+               SeqDT_parameters: dict = None, dataset_name: str = 'Unknown', 
+               visualize_plots: bool = True) -> dict:
     """
     Analyze time series with discretization and SeqDT classification
     
@@ -172,26 +173,26 @@ def TSAnalysis(X_train: np.ndarray, y_train: np.ndarray,
         'Training_Time': round(seqdt_result['training_time'], 3),
         
         'Bins': bins,
-        'g': SeqDT_parameters['g'],
-        'maxL': SeqDT_parameters['maxL'],
-        'Pruning': SeqDT_parameters['pru'],
-        'Epsilon': SeqDT_parameters['epsilon'],
-        'minS': SeqDT_parameters['minS'],
-        'minN': SeqDT_parameters['minN'],
-        'maxD': SeqDT_parameters['maxD'],
+        #'g': SeqDT_parameters['g'],
+        #'maxL': SeqDT_parameters['maxL'],
+        #'Pruning': SeqDT_parameters['pru'],
+        #'Epsilon': SeqDT_parameters['epsilon'],
+        #'minS': SeqDT_parameters['minS'],
+        #'minN': SeqDT_parameters['minN'],
+        #'maxD': SeqDT_parameters['maxD'],
         
         'Train Size': len(X_train),
         'Test Size': len(X_test),
-        'Original Length': X_train.shape[2],
+        #'Original Length': X_train.shape[2],
         
-        'Avg_Seq_Length': round(avg_seq_len, 2),
-        'Std_Seq_Length': round(std_seq_len, 2),
-        'Avg_Seq_Length_Train': round(avg_seq_len_train, 2),
-        'Std_Seq_Length_Train': round(std_seq_len_train, 2),
-        'Avg_Seq_Length_Test': round(avg_seq_len_test, 2),
-        'Std_Seq_Length_Test': round(std_seq_len_test, 2),
-        'Min_Seq_Length': min_seq_len,
-        'Max_Seq_Length': max_seq_len,
+        #'Avg_Seq_Length': round(avg_seq_len, 2),
+        #'Std_Seq_Length': round(std_seq_len, 2),
+        #'Avg_Seq_Length_Train': round(avg_seq_len_train, 2),
+        #'Std_Seq_Length_Train': round(std_seq_len_train, 2),
+        #'Avg_Seq_Length_Test': round(avg_seq_len_test, 2),
+        #'Std_Seq_Length_Test': round(std_seq_len_test, 2),
+        #'Min_Seq_Length': min_seq_len,
+        #'Max_Seq_Length': max_seq_len,
         
         'Tree_Depth': seqdt_result.get('tree_depth', None)
     }
