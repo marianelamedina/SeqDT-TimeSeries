@@ -188,10 +188,6 @@ If you use this code in your research, please cite the original paper:
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## Contact
-
-[Add your contact information here]
-
 ## Acknowledgments
 
 This implementation is based on the SeqDT algorithm proposed by Zengyou He and colleagues. The original paper and additional resources can be found at: https://github.com/ZiyaoWu/SeqDT
