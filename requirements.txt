@@ -1,0 +1,17 @@
+# Core dependencies
+numpy>=1.21.0
+scipy>=1.7.0
+
+# Machine learning and metrics
+scikit-learn>=1.0.0
+
+# Visualization
+matplotlib>=3.4.0
+plotly>=5.0.0
+graphviz>=0.20.0
+
+# Jupyter support (for IPython.display)
+ipython>=7.30.0
+
+# Optional: For running in Jupyter notebooks
+jupyter>=1.0.0
