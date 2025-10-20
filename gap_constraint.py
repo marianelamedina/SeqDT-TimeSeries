@@ -2,6 +2,8 @@ def check_gap_constraint(sequence: list, feature: list, g: int = 1) -> tuple:
     """
     Checks whether a feature is present in a sequence while respecting the gap constraint
     (maximum allowed gap between consecutive elements of the feature).
+    g = 1 means contiguous elements (substring),
+    g = 0 means no gap constraint (standard subsequence).
 
     Input:
         - sequence: list
@@ -13,24 +15,25 @@ def check_gap_constraint(sequence: list, feature: list, g: int = 1) -> tuple:
             - match: bool (True if the feature is found, False otherwise)
             - last_match_pos: int (position of the last element of the feature in the sequence, None if no match)
     """
-    
-    if len(feature) == 0:
-        return True, -1
+    if not feature:
+        return True, -1 
     
     feature_index = 0
     last_match_pos = -1
     
-    for seq_index in range(len(sequence)):
-        if feature_index < len(feature) and sequence[seq_index] == feature[feature_index]:
-            if last_match_pos != -1 and (seq_index - last_match_pos - 1) > g:
-                return False, None  # Gap constraint not respected
-            
+    for seq_index, symbol in enumerate(sequence):
+        if symbol == feature[feature_index]:
+            if last_match_pos != -1 and g != 0:
+                distance = seq_index - last_match_pos
+                if distance > g:
+                    return False, None  # Gap constraint not respected
+
             last_match_pos = seq_index
             feature_index += 1
             
-            # Found all the given features  
+            # Found all the given features 
             if feature_index == len(feature):
-                return True, last_match_pos
+                return True, last_match_pos 
     
     # Not found all the given features 
     return False, None
