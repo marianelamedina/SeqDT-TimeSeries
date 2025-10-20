@@ -38,7 +38,7 @@ def split_node(current_node: list, feature: list, g: int = 1) -> tuple:
 
 
 
-def upper_bound(current_node: list, feature: list) -> float:
+def upper_bound(current_node: list, feature: list, g: int = 1) -> float:
     '''
     Computes the upper bound of the Gini improvement for a given feature. 
     It assumes the best-case scenario where all sequences in T_P belong to a single class, 
@@ -48,6 +48,7 @@ def upper_bound(current_node: list, feature: list) -> float:
     Input:
         - current_node: list of tuples (sequence, label)
         - feature: list
+        - g: int
     
     Outbut: 
         - ideal_improvement: float
@@ -55,9 +56,9 @@ def upper_bound(current_node: list, feature: list) -> float:
     
     labels_current_node = extraction_labels(current_node)
     
-    T_P, T_nP = split_node(current_node, feature)
+    T_P, T_nP = split_node(current_node, feature, g)
     
-    #If T_P is empty, the upper bound is 0 (pure)
+    #If T_P is empty, the upper bound is 0
     if len(T_P) == 0:
         return 0
     
@@ -74,14 +75,21 @@ def upper_bound(current_node: list, feature: list) -> float:
         
         # Create ideal T_P containing only sequences of target_class
         ideal_T_P = [target_class] * count_target_class
+        #print(f"Ideal T_P: {ideal_T_P}")
         
         # Create ideal T_nP
-        ideal_T_nP = labels_current_node.copy()
-        for i in range(count_target_class):
-            ideal_T_nP.remove(target_class)
+        ideal_T_nP = []
+        removed_count = 0
+        for label in labels_current_node:
+            if label == target_class and removed_count < count_target_class:
+                removed_count += 1
+            else:
+                ideal_T_nP.append(label)
+        #print(f"Ideal T_nP: {ideal_T_nP}")
         
         # Calculate improvement for this ideal case
         ideal_improvement = improvement_gini(labels_current_node, ideal_T_P, ideal_T_nP)
+        #print(f"Ideal improvement: {ideal_improvement}")
         
         ideal_improvements.append(ideal_improvement)
     
