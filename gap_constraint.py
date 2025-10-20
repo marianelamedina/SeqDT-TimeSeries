@@ -4,6 +4,10 @@ def check_gap_constraint(sequence: list, feature: list, g: int = 1) -> tuple:
     (maximum allowed gap between consecutive elements of the feature).
     g = 1 means contiguous elements (substring),
     g = 0 means no gap constraint (standard subsequence).
+    
+    The function returns the earliest end match position (the position of the last element 
+    of the first valid match encountered, if multiple matches exist).
+
 
     Input:
         - sequence: list
