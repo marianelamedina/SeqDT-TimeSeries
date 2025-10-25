@@ -60,6 +60,11 @@ def BT(T: list, g: int, maxL:int, dep: int, epsilon: float, minS: float, minN: i
     N = Node()
     N.records = T
     
+    if not T:
+        N.type = 'leaf'
+        N.label = None 
+        return N
+    
     # FIRST STAGE: check stopping criteria 1 (node purity is sufficient)
     
     gini_val = Gini(extraction_labels(T))
@@ -78,9 +83,13 @@ def BT(T: list, g: int, maxL:int, dep: int, epsilon: float, minS: float, minN: i
     # node N and checks the remaining stopping criteria.
     
     maxP, maxI = DPH(T, g, maxL)
-    N.split_feature = maxP
-    #print(f'From DPH, we found best patter {maxP}, with improvement Gini equal to {maxI}')
     
+    if maxP is None:  
+        N.type = 'leaf'
+        N.label = majority(T)
+        return N
+
+    #print(f'From DPH, we found best patter {maxP}, with improvement Gini equal to {maxI}')
     
     T_P = []
     T_nP = []
@@ -110,6 +119,9 @@ def BT(T: list, g: int, maxL:int, dep: int, epsilon: float, minS: float, minN: i
         N.type = 'leaf'
         N.label = majority(T)
         return N
+    
+    N.type = 'internal' 
+    N.split_feature = maxP
     
     # Recursively build children
     #print('Generated children')
