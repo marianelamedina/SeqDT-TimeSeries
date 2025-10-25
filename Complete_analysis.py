@@ -77,8 +77,6 @@ def analyze_dataset(dataset: list, dataset_name: str, train_params: dict = None,
     gmean_std = result_cv['gmean_std']
     
     # Dataset training
-    tree_depth = 0
-    training_time = 0
     
     if visualize:
         start_time = time.time()

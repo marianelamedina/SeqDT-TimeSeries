@@ -101,7 +101,7 @@ def PEP(node: Node) -> Node:
     Output:
         - node: class Node (after pruning)
     """
-    
+     
     if node.type == 'leaf':
         return node
     
@@ -110,9 +110,10 @@ def PEP(node: Node) -> Node:
     e_Tt = subtree_error(node)
     n_samples = len(node.records)
     Std_Error = standard_error(e_Tt, n_samples)
-    #print(f"n_samples = {n_samples}, e(t) = {e_t}, e(Tt) = {e_Tt}, standard error = {Std_Error}")
     
-    # Pruning criteria
+    #print(f"n_samples = {n_samples}, e(t) = {e_t}, e(Tt) = {e_Tt}, standard error = {round(Std_Error,3)}")
+    
+    # Pruning criteria: e(t) ≤ e(T_t) + SE
     if e_t <= e_Tt + Std_Error:
         node.type = 'leaf'
         node.label = majority(node.records)
@@ -120,11 +121,11 @@ def PEP(node: Node) -> Node:
         node.right_child = None
         node.split_feature = None
         #print("Pruned")
-    
-    # Recursively top-down pruning
-    if node.left_child:
-        node.left_child = PEP(node.left_child)
-    if node.right_child:
-        node.right_child = PEP(node.right_child)
+        
+    else:
+        if node.left_child:
+            node.left_child = PEP(node.left_child)
+        if node.right_child:
+            node.right_child = PEP(node.right_child)
     
     return node

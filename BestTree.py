@@ -69,7 +69,7 @@ def BT(T: list, g: int, maxL:int, dep: int, epsilon: float, minS: float, minN: i
     
     gini_val = Gini(extraction_labels(T))
     #print('\nNode:', T)
-    #print(f'Gini of node = {gini_val}')
+    #print(f'Gini of node = {round(gini_val,3)}')
     
     if gini_val <= epsilon:
         #print(f'Gini of node <= epsilon ( = {epsilon})')
@@ -84,12 +84,13 @@ def BT(T: list, g: int, maxL:int, dep: int, epsilon: float, minS: float, minN: i
     
     maxP, maxI = DPH(T, g, maxL)
     
-    if maxP is None:  
+    if not maxP:  
         N.type = 'leaf'
         N.label = majority(T)
+        #print('No valid pattern found, node becomes leaf')
         return N
 
-    #print(f'From DPH, we found best patter {maxP}, with improvement Gini equal to {maxI}')
+    #print(f'From DPH, we found best pattern {maxP}, with improvement Gini equal to {round(maxI,3)}')
     
     T_P = []
     T_nP = []
@@ -109,7 +110,7 @@ def BT(T: list, g: int, maxL:int, dep: int, epsilon: float, minS: float, minN: i
     #print(f'T_nP: {T_nP}')
     
     # Check remaining stopping criteria
-    if (maxI < minS or # 2° criterion: when decreased impurity for splitting is less than minS
+    if (maxI <= minS or # 2° criterion: when decreased impurity for splitting is less than minS
         len(T_P) < minN or # 3° criterion: the number of records in the left child node or
         len(T_nP) < minN or  # the right child node is less than minN
         (maxD > 0 and dep > maxD)): # 4° criterion: the depth of the decision tree is larger than maxD.

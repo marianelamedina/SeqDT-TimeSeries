@@ -52,20 +52,22 @@ def sequences_per_class(dataset: list) -> dict:
 
 
 def calculate_tree_depth(node: Node) -> int:
+    """
+    Calculate the depth of a tree rooted at the given node.
+    
+    Input:
+        - node: Node (root of tree/subtree)
+    
+    Output:
+        - depth: int (1 for a single leaf, increases with each level)
+    """
     if node is None:
         return 0
     
-    #hasattr() returns True if the specified object has the specified attribute, otherwise False
-    
-    if (hasattr(node, 'type') and node.type == 'leaf') or not hasattr(node, 'left_child'):
+    if node.type == 'leaf':
         return 1
     
-    left_depth = 0
-    right_depth = 0
-    
-    if hasattr(node, 'left_child') and node.left_child is not None:
-        left_depth = calculate_tree_depth(node.left_child)
-    if hasattr(node, 'right_child') and node.right_child is not None:
-        right_depth = calculate_tree_depth(node.right_child)
+    left_depth = calculate_tree_depth(node.left_child) if node.left_child else 0
+    right_depth = calculate_tree_depth(node.right_child) if node.right_child else 0
     
     return 1 + max(left_depth, right_depth)
